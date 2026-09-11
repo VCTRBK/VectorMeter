@@ -6,27 +6,18 @@
 <style>
 :root{--red:#f21d2f;--silver:#d7d9de;--black:#050505;--panel:#101010;--line:#2a2a2a}
 *{box-sizing:border-box}body{margin:0;background:var(--black);color:#fff;font-family:Arial,sans-serif}
-#top{height:76px;background:#070707;display:flex;align-items:center;padding:8px 12px;gap:10px;border-bottom:1px solid #222}
-#top img{height:58px;max-width:74%;object-fit:contain}
-#tabs{display:flex;background:#0b0b0b;border-bottom:1px solid #222}
-.tab{flex:1;padding:14px 8px;text-align:center;font-weight:bold;color:#aaa}.tab.active{color:#fff;border-bottom:3px solid var(--red)}
-#map{height:42vh;min-height:280px}
-#panel{padding:12px}
-.card{background:var(--panel);border:1px solid #292929;border-radius:16px;padding:14px;margin-bottom:12px}
-.big{font-size:38px;font-weight:800;color:var(--red)}.muted{color:#aaa;font-size:13px}
-.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
-button{background:#171717;color:#fff;border:1px solid #444;border-radius:12px;padding:13px 12px;font-size:15px;font-weight:bold}
-button.primary{background:var(--red);border-color:var(--red)}button.secondary{border-color:#666}
-input{width:100%;background:#090909;color:#fff;border:1px solid #444;border-radius:10px;padding:11px}
-.hidden{display:none}.stop{padding:10px 0;border-bottom:1px solid #252525}.stop:last-child{border-bottom:0}
-.badge{display:inline-block;background:#222;border-radius:99px;padding:5px 9px;color:#ddd;font-size:12px}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #333;padding:7px;text-align:left}th{background:#191919}tfoot td{font-weight:800;background:#2a0a0d}
-#routeList{max-height:250px;overflow:auto}
+#top{height:76px;background:#070707;display:flex;align-items:center;padding:8px 12px;gap:10px;border-bottom:1px solid #222}#top img{height:58px;max-width:68%;object-fit:contain}.gear{margin-left:auto;width:48px;height:48px;padding:0;border-radius:50%;font-size:25px}
+#tabs{display:flex;background:#0b0b0b;border-bottom:1px solid #222;overflow:auto}.tab{min-width:25%;padding:13px 5px;text-align:center;font-weight:bold;color:#aaa;font-size:12px}.tab.active{color:#fff;border-bottom:3px solid var(--red)}
+#map{height:40vh;min-height:260px}.panel{padding:12px}.card{background:var(--panel);border:1px solid #292929;border-radius:16px;padding:14px;margin-bottom:12px}.big{font-size:38px;font-weight:800;color:var(--red)}.muted{color:#aaa;font-size:13px}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+button{background:#171717;color:#fff;border:1px solid #444;border-radius:12px;padding:12px;font-size:14px;font-weight:bold}button.primary{background:var(--red);border-color:var(--red)}button.danger{border-color:#b11;background:#26070a}button.small{padding:8px 10px;font-size:12px}
+input,textarea,select{width:100%;background:#090909;color:#fff;border:1px solid #444;border-radius:10px;padding:10px}textarea{min-height:100px;resize:vertical}.hidden{display:none!important}
+.stop{padding:10px 0;border-bottom:1px solid #252525}.stop:last-child{border-bottom:0}.badge{display:inline-block;background:#222;border-radius:99px;padding:5px 9px;color:#ddd;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #333;padding:7px;text-align:left;vertical-align:top}th{background:#191919;white-space:nowrap}tfoot td{font-weight:800;background:#2a0a0d}.scroll{overflow:auto}.datebar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.datebar button{width:100%}.plan-card{border:1px solid #333;border-radius:12px;padding:10px;margin-top:8px;background:#0b0b0b}.plan-card.active{border-color:var(--red)}.pill{display:inline-block;border:1px solid #444;border-radius:99px;padding:4px 8px;font-size:11px;margin:2px}.summary-row{padding:10px 0;border-bottom:1px solid #292929}.summary-row:last-child{border-bottom:0}.content-item{border:1px solid #333;border-radius:12px;padding:10px;margin-top:8px;background:#0b0b0b}.content-item img,.content-item video{max-width:100%;max-height:320px;border-radius:10px;display:block;margin-top:8px}.content-text{white-space:pre-wrap;word-break:break-word}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:5000;display:flex;align-items:flex-start;justify-content:center;padding:35px 12px;overflow:auto}.modalbox{width:min(620px,100%);background:#111;border:1px solid #444;border-radius:18px;padding:16px;box-shadow:0 10px 40px #000}.modalbox h3{margin:0 0 12px}.right{text-align:right}.adminOnly{display:none}
 </style>
 </head>
 <body>
-<div id="top"><img src="file:///android_res/drawable/v_wordmark.jpg"></div>
-<div id="tabs"><div id="tReal" class="tab active" onclick="showMode('real')">REALVECTOR</div><div id="tPlan" class="tab" onclick="showMode('plan')">VECTORPLAN</div></div>
+<div id="top"><img src="file:///android_res/drawable/v_wordmark.jpg"><button class="gear" onclick="openSettings()">⚙</button></div>
+<div id="tabs"><div id="tReal" class="tab active" onclick="showMode('real')">REALVECTOR</div><div id="tPlan" class="tab" onclick="showMode('plan')">VECTORPLAN</div><div id="tGreat" class="tab" onclick="showMode('great')">GREATVECTOR</div><div id="tSupport" class="tab" onclick="showMode('support')">SUPPORT</div></div>
 <div id="map"></div>
 <div id="panel">
   <div id="realPanel">
@@ -35,98 +26,104 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid 
     <div class="card"><div class="muted">STATUS</div><div id="realStatus">Siap merekam perjalanan.</div></div>
   </div>
 
-  <div id="planPanel" class="hidden">
+  <div id="planPanel" class="hidden panel">
     <div class="card">
-      <div style="font-weight:800;margin-bottom:8px">Rencana Perjalanan</div>
-      <div class="muted">Ketuk peta untuk menambahkan perhentian. Jarak rute dihitung dari OpenStreetMap melalui OSRM.</div>
+      <div style="font-weight:800;margin-bottom:8px">VECTORPLAN</div>
+      <div class="datebar"><div><div class="muted">Tanggal rencana</div><input id="planDate" type="date" onchange="selectDate(this.value)"></div><button class="primary" onclick="newPlan()">＋ PLAN BARU</button></div>
+      <div class="muted" style="margin-top:10px">Satu tanggal boleh memiliki beberapa plan. Setiap plan memiliki tabel perjalanan lengkap. Ketuk titik peta untuk menambah perhentian.</div>
     </div>
-    <div class="card">
+    <div class="card"><div style="font-weight:800">Plan pada tanggal ini</div><div id="datePlans"></div></div>
+    <div id="currentPlanBox" class="card">
+      <div id="currentPlanTitle" style="font-weight:800;margin-bottom:8px">Belum ada plan</div>
       <div id="routeList"></div>
-      <div class="row" style="margin-top:10px"><button onclick="clearPlan()">Reset</button><button class="primary" onclick="savePlan()">Simpan Rencana</button></div>
+      <div class="row" style="margin-top:10px"><button onclick="clearCurrentPlan()">Reset Titik</button><button class="primary" onclick="saveCurrentPlan()">Simpan Plan</button></div>
     </div>
-    <div class="card">
-      <table><thead><tr><th>NOMOR</th><th>TUJUAN</th><th>KM AWAL</th><th>KM AKHIR</th><th>JUMLAH (KM)</th></tr></thead>
-      <tbody id="planRows"></tbody>
-      <tfoot><tr><td colspan="4">TOTAL</td><td id="planTotal">0.00</td></tr></tfoot></table>
-    </div>
+    <div class="card"><div class="scroll"><table><thead><tr><th>NOMOR</th><th>TUJUAN</th><th>KILOMETER AWAL</th><th>KILOMETER AKHIR</th><th>JUMLAH (KM)</th></tr></thead><tbody id="planRows"></tbody><tfoot><tr><td colspan="4">TOTAL</td><td id="planTotal">0.00</td></tr></tfoot></table></div></div>
+  </div>
+
+  <div id="greatPanel" class="hidden panel">
+    <div class="card"><div style="font-weight:800">GREATVECTOR</div><div class="muted">Rekap otomatis seluruh plan yang sudah disimpan di VectorPlan. Plan dengan tanggal sama tetap tampil sebagai beberapa baris.</div></div>
+    <div class="card"><div class="scroll"><table><thead><tr><th>NOMOR</th><th>TANGGAL</th><th>TUJUAN</th><th>KILOMETER AWAL</th><th>KILOMETER AKHIR</th><th>JUMLAH KM</th></tr></thead><tbody id="greatRows"></tbody><tfoot><tr><td colspan="5">TOTAL KILOMETER</td><td id="greatTotal">0.00</td></tr></tfoot></table></div></div>
+  </div>
+
+  <div id="supportPanel" class="hidden panel">
+    <div class="card"><div style="font-weight:800">SUPPORT</div><div class="muted">Informasi, gambar, foto, video, dan tulisan dari administrator.</div></div>
+    <div id="supportContent"></div>
   </div>
 </div>
+
+<div id="settingsModal" class="modal hidden"><div class="modalbox">
+  <h3>⚙ SETTINGS</h3>
+  <div id="loginBox"><div class="muted">Login Administrator</div><input id="adminPassword" type="password" placeholder="Password administrator" style="margin-top:8px"><button class="primary" onclick="adminLogin()" style="margin-top:8px;width:100%">LOGIN</button><div class="muted" style="margin-top:8px">Semua pengguna dapat melihat isi aplikasi. Hanya administrator yang dapat mengubah SUPPORT dan HELP.</div></div>
+  <div id="adminBox" class="hidden">
+    <div class="badge">ADMIN AKTIF</div>
+    <div style="margin-top:12px;font-weight:800">HELP</div><textarea id="helpEditor" placeholder="Tulis panduan bantuan..."></textarea><button class="primary" onclick="saveHelp()" style="margin-top:8px;width:100%">Simpan HELP</button>
+    <div style="margin-top:16px;font-weight:800">Tambah isi SUPPORT</div><textarea id="supportText" placeholder="Tulisan / pengumuman / catatan"></textarea><button onclick="addSupportText()" style="margin-top:8px;width:100%">＋ Tambah Tulisan</button>
+    <div style="margin-top:10px"><button onclick="pickMedia()" style="width:100%">＋ Tambah Gambar / Foto / Video</button><input id="mediaPicker" class="hidden" type="file" accept="image/*,video/*" onchange="handleMedia(event)"></div>
+    <div style="margin-top:10px"><button class="danger" onclick="adminLogout()" style="width:100%">LOGOUT ADMIN</button></div>
+  </div>
+  <div class="right" style="margin-top:14px"><button onclick="closeSettings()">Tutup</button></div>
+</div></div>
+
+<div id="helpModal" class="modal hidden"><div class="modalbox"><h3>HELP</h3><div id="helpContent" class="content-text"></div><div class="right" style="margin-top:14px"><button onclick="document.getElementById('helpModal').classList.add('hidden')">Tutup</button></div></div></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 let map=L.map('map',{zoomControl:true}).setView([-6.2,106.82],11);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
 let meMarker=null, trackLine=L.polyline([],{color:'#f21d2f',weight:5}).addTo(map);
-let recording=false, last=null, totalKm=0, points=[], plan=[], planMarkers=[], planLines=[];
+let recording=false,last=null,totalKm=0,points=[];
+let planMarkers=[],planLines=[],geocodeSeq=0,geocodeBusy=false,geocodeQueue=[];
+let allPlans=loadPlans(), selectedDate=todayISO(), currentPlan=null, admin=false;
+const ADMIN_PASSWORD='VECTORMETER-ADMIN';
+function todayISO(){let d=new Date();return d.toISOString().slice(0,10)}
+function loadPlans(){try{return JSON.parse(localStorage.getItem('vectormeter_plans')||'[]')}catch(e){return []}}
+function savePlans(){localStorage.setItem('vectormeter_plans',JSON.stringify(allPlans))}
 function showMode(m){
-  document.getElementById('realPanel').classList.toggle('hidden',m!=='real');
-  document.getElementById('planPanel').classList.toggle('hidden',m!=='plan');
-  document.getElementById('tReal').classList.toggle('active',m==='real');
-  document.getElementById('tPlan').classList.toggle('active',m==='plan');
+  ['real','plan','great','support'].forEach(x=>{document.getElementById(x+'Panel').classList.toggle('hidden',m!==x)});
+  document.getElementById('tReal').classList.toggle('active',m==='real');document.getElementById('tPlan').classList.toggle('active',m==='plan');document.getElementById('tGreat').classList.toggle('active',m==='great');document.getElementById('tSupport').classList.toggle('active',m==='support');
+  if(m==='plan'){document.getElementById('planDate').value=selectedDate;renderDatePlans();setTimeout(()=>map.invalidateSize(),100)}
+  if(m==='great'){renderGreat();setTimeout(()=>map.invalidateSize(),100)}
+  if(m==='support')renderSupport();
 }
-function toggleRecord(){
-  recording=!recording;
-  const b=document.getElementById('recordBtn');
-  if(recording){b.textContent='■ STOP RECORD'; b.className='secondary'; document.getElementById('realStatus').textContent='Sedang merekam GPS…'; Android.startGps();}
-  else{b.textContent='▶ MULAI RECORD'; b.className='primary'; document.getElementById('realStatus').textContent='Perjalanan selesai. Jarak tersimpan untuk sesi ini.'; Android.stopGps();}
-}
-function onGps(lat,lon){
-  const p=L.latLng(lat,lon);
-  if(meMarker) meMarker.setLatLng(p); else meMarker=L.marker(p).addTo(map).bindPopup('Lokasi Anda');
-  if(recording){
-    if(last) totalKm += last.distanceTo(p)/1000;
-    last=p; points.push([lat,lon]); trackLine.setLatLngs(points);
-    document.getElementById('km').textContent=totalKm.toFixed(2);
-    map.setView(p,16);
-  }
-}
-function centerMe(){Android.requestOneLocation();}
-function addPlanPoint(lat,lon,name){
-  plan.push({lat,lon,name:name||('Titik '+plan.length)});
-  const marker=L.marker([lat,lon]).addTo(map).bindTooltip(String(plan.length),{permanent:true,direction:'top'}); planMarkers.push(marker);
-  renderPlan();
-  if(plan.length>=2) routePlan();
-}
-map.on('click',e=>{ if(document.getElementById('planPanel').classList.contains('hidden')) return; addPlanPoint(e.latlng.lat,e.latlng.lng,'Titik '+plan.length); });
-async function routePlan(){
-  planLines.forEach(x=>map.removeLayer(x)); planLines=[];
-  let total=0, legs=[];
-  for(let i=0;i<plan.length-1;i++){
-    const a=plan[i],b=plan[i+1];
-    try{
-      const u=`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`;
-      const r=await fetch(u); const j=await r.json(); if(j.routes&&j.routes[0]){
-        const rt=j.routes[0]; const km=rt.distance/1000; total+=km; legs.push(km);
-        const line=L.geoJSON(rt.geometry,{style:{color:'#f21d2f',weight:5}}).addTo(map); planLines.push(line);
-      }
-    }catch(e){legs.push(0)}
-  }
-  renderTable(legs,total);
-}
-function renderPlan(){
-  document.getElementById('routeList').innerHTML=plan.map((p,i)=>`<div class="stop"><span class="badge">${i+1}</span> ${escapeHtml(p.name)}</div>`).join('') || '<span class="muted">Belum ada perhentian.</span>';
-}
-function renderTable(legs,total){
-  let start=0, html='';
-  for(let i=0;i<legs.length;i++){
-    const end=start+legs[i];
-    html+=`<tr><td>${i+1}</td><td>${escapeHtml(plan[i].name)} → ${escapeHtml(plan[i+1].name)}</td><td><input id="s${i}" type="number" step="0.01" value="${start.toFixed(2)}" oninput="recalcRows()"></td><td id="e${i}">${end.toFixed(2)}</td><td>${legs[i].toFixed(2)}</td></tr>`;
-    start=end;
-  }
-  if(plan.length) html+=`<tr><td>${plan.length}</td><td>${escapeHtml(plan[plan.length-1].name)} → …</td><td><input id="slast" type="number" step="0.01" value="${start.toFixed(2)}" oninput="recalcRows()"></td><td id="elast">${start.toFixed(2)}</td><td>0.00</td></tr>`;
-  document.getElementById('planRows').innerHTML=html; document.getElementById('planTotal').textContent=total.toFixed(2);
-}
-function recalcRows(){
-  let prev=0;
-  const rows=document.querySelectorAll('#planRows tr');
-  rows.forEach((r,i)=>{const inp=r.querySelector('input'); if(!inp)return; const val=parseFloat(inp.value)||0; const km=parseFloat(r.cells[4].textContent)||0; const end=val+km; r.cells[3].textContent=end.toFixed(2); prev=end;});
-}
-function clearPlan(){plan=[];planMarkers.forEach(x=>map.removeLayer(x));planMarkers=[];planLines.forEach(x=>map.removeLayer(x));planLines=[];renderPlan();document.getElementById('planRows').innerHTML='';document.getElementById('planTotal').textContent='0.00';}
-function savePlan(){Android.savePlan(JSON.stringify(plan));alert('Rencana VectorPlan disimpan di HP.');}
-function setStartTime(s){document.getElementById('times').textContent='Start: '+s;}
-function setEndTime(s){document.getElementById('times').textContent+='  •  Finish: '+s;}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-renderPlan();
+function toggleRecord(){recording=!recording;let b=document.getElementById('recordBtn');if(recording){b.textContent='■ STOP RECORD';b.className='secondary';document.getElementById('realStatus').textContent='Sedang merekam GPS…';Android.startGps()}else{b.textContent='▶ MULAI RECORD';b.className='primary';document.getElementById('realStatus').textContent='Perjalanan selesai. Jarak tersimpan untuk sesi ini.';Android.stopGps()}}
+function onGps(lat,lon){let p=L.latLng(lat,lon);if(meMarker)meMarker.setLatLng(p);else meMarker=L.marker(p).addTo(map).bindPopup('Lokasi Anda');if(recording){if(last)totalKm+=last.distanceTo(p)/1000;last=p;points.push([lat,lon]);trackLine.setLatLngs(points);document.getElementById('km').textContent=totalKm.toFixed(2);map.setView(p,16)}}
+function centerMe(){Android.requestOneLocation()}
+function newPlan(){selectedDate=document.getElementById('planDate').value||todayISO();clearMapOnly();currentPlan={id:Date.now()+'',date:selectedDate,name:'Plan '+(plansForDate(selectedDate).length+1),points:[]};renderCurrent();renderDatePlans()}
+function selectDate(d){selectedDate=d||todayISO();let list=plansForDate(selectedDate);clearMapOnly();currentPlan=list.length?JSON.parse(JSON.stringify(list[list.length-1])):null;document.getElementById('planDate').value=selectedDate;renderDatePlans();renderCurrent();if(currentPlan&&currentPlan.points.length)drawSavedPlan()}
+function plansForDate(d){return allPlans.filter(p=>p.date===d)}
+function addPlanPoint(lat,lon){if(!currentPlan)newPlan();let id=++geocodeSeq;let fallback='Lokasi '+(currentPlan.points.length+1);currentPlan.points.push({lat,lon,name:fallback,loading:true,geocodeId:id});let marker=L.marker([lat,lon]).addTo(map).bindTooltip(String(currentPlan.points.length),{permanent:true,direction:'top'});planMarkers.push(marker);renderCurrent();geocodeQueue.push({id,lat,lon,index:currentPlan.points.length-1});processGeocodeQueue();if(currentPlan.points.length>=2)routePlan()}
+map.on('click',e=>{if(document.getElementById('planPanel').classList.contains('hidden'))return;addPlanPoint(e.latlng.lat,e.latlng.lng)})
+function processGeocodeQueue(){if(geocodeBusy||!geocodeQueue.length)return;geocodeBusy=true;let q=geocodeQueue.shift();try{Android.reverseGeocode(q.lat,q.lon,q.id)}catch(e){onReverseGeocode(q.id,'Lokasi '+(q.index+1))}}
+function onReverseGeocode(id,name){if(currentPlan){let i=currentPlan.points.findIndex(p=>p.geocodeId===id);if(i>=0){currentPlan.points[i].name=name||('Lokasi '+(i+1));currentPlan.points[i].loading=false;renderCurrent()}}geocodeBusy=false;setTimeout(processGeocodeQueue,1100)}
+async function routePlan(){if(!currentPlan)return;planLines.forEach(x=>map.removeLayer(x));planLines=[];let legs=[];for(let i=0;i<currentPlan.points.length-1;i++){let a=currentPlan.points[i],b=currentPlan.points[i+1];try{let u=`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`;let r=await fetch(u),j=await r.json();if(j.routes&&j.routes[0]){let rt=j.routes[0],km=rt.distance/1000;legs.push(km);planLines.push(L.geoJSON(rt.geometry,{style:{color:'#f21d2f',weight:5}}).addTo(map))}else legs.push(0)}catch(e){legs.push(0)}}renderTable(legs)}
+function drawSavedPlan(){clearMapOnly(false);currentPlan.points.forEach((p,i)=>{let m=L.marker([p.lat,p.lon]).addTo(map).bindTooltip(String(i+1),{permanent:true,direction:'top'});planMarkers.push(m)});if(currentPlan.points.length>=2)routePlan()}
+function renamePlanPoint(i){let entered=prompt('Ubah nama tujuan/perhentian:',currentPlan.points[i].name);if(entered===null)return;let name=entered.trim();if(!name)return;currentPlan.points[i].name=name;renderCurrent();if(currentPlan.points.length>=2)routePlan()}
+function renderCurrent(){document.getElementById('currentPlanTitle').innerHTML=currentPlan?`Plan: <b>${escapeHtml(currentPlan.name)}</b> — ${formatDate(currentPlan.date)}`:'Belum ada plan';let pts=currentPlan?currentPlan.points:[];document.getElementById('routeList').innerHTML=pts.map((p,i)=>`<div class="stop" onclick="renamePlanPoint(${i})"><span class="badge">${i+1}</span> ${escapeHtml(p.name)} ${p.loading?'<span class="muted" style="float:right">mencari nama…</span>':'<span class="muted" style="float:right">ketuk untuk ubah</span>'}</div>`).join('')||'<span class="muted">Belum ada perhentian.</span>';if(!pts.length){document.getElementById('planRows').innerHTML='';document.getElementById('planTotal').textContent='0.00'}}
+function renderTable(legs){if(!currentPlan)return;let html='';for(let i=0;i<legs.length;i++){let km=legs[i],saved=currentPlan.rows&&currentPlan.rows[i]?currentPlan.rows[i].start:0;html+=`<tr><td>${i+1}</td><td>${escapeHtml(currentPlan.points[i].name)} → ${escapeHtml(currentPlan.points[i+1].name)}</td><td><input id="s${i}" type="number" step="0.01" value="${Number(saved||0).toFixed(2)}" oninput="recalcRows()"></td><td id="e${i}">${km.toFixed(2)}</td><td>${km.toFixed(2)}</td></tr>`}document.getElementById('planRows').innerHTML=html;document.getElementById('planTotal').textContent=legs.reduce((a,b)=>a+b,0).toFixed(2);recalcRows()}
+function recalcRows(){if(!currentPlan)return;document.querySelectorAll('#planRows tr').forEach(r=>{let inp=r.querySelector('input');if(!inp)return;let val=parseFloat(inp.value)||0,km=parseFloat(r.cells[4].textContent)||0;r.cells[3].textContent=(val+km).toFixed(2)})}
+function clearMapOnly(resetCurrent=true){geocodeQueue=[];geocodeBusy=false;planMarkers.forEach(x=>map.removeLayer(x));planMarkers=[];planLines.forEach(x=>map.removeLayer(x));planLines=[];if(resetCurrent){} }
+function clearCurrentPlan(){if(!currentPlan)return;currentPlan.points=[];currentPlan.rows=[];clearMapOnly();renderCurrent();renderTable([])}
+function saveCurrentPlan(){if(!currentPlan){alert('Buat plan terlebih dahulu.');return}if(currentPlan.points.length<2){alert('Tambahkan minimal 2 titik perjalanan.');return}let rows=[];document.querySelectorAll('#planRows tr').forEach((r,i)=>rows.push({start:parseFloat(r.querySelector('input')?.value)||0,routeKm:parseFloat(r.cells[4].textContent)||0,end:parseFloat(r.cells[3].textContent)||0,from:currentPlan.points[i].name,to:currentPlan.points[i+1].name}));currentPlan.rows=rows;let idx=allPlans.findIndex(p=>p.id===currentPlan.id);if(idx>=0)allPlans[idx]=JSON.parse(JSON.stringify(currentPlan));else allPlans.push(JSON.parse(JSON.stringify(currentPlan)));savePlans();renderDatePlans();renderGreat();alert('Plan tanggal '+formatDate(currentPlan.date)+' berhasil disimpan.')}
+function editSavedPlan(id){let p=allPlans.find(x=>x.id===id);if(!p)return;selectedDate=p.date;currentPlan=JSON.parse(JSON.stringify(p));clearMapOnly();document.getElementById('planDate').value=selectedDate;renderDatePlans();renderCurrent();drawSavedPlan()}
+function deleteSavedPlan(id){if(!confirm('Hapus plan ini?'))return;allPlans=allPlans.filter(x=>x.id!==id);savePlans();if(currentPlan&&currentPlan.id===id){currentPlan=null;clearMapOnly();renderCurrent()}renderDatePlans();renderGreat()}
+function renderDatePlans(){let list=plansForDate(selectedDate);document.getElementById('datePlans').innerHTML=list.map((p,i)=>`<div class="plan-card ${currentPlan&&currentPlan.id===p.id?'active':''}"><b>${escapeHtml(p.name||('Plan '+(i+1)))}</b><div class="muted">${p.points.length} titik • ${p.rows?p.rows.reduce((a,r)=>a+Number(r.routeKm||0),0).toFixed(2):'0.00'} KM rute</div><div style="margin-top:6px"><button class="small" onclick="editSavedPlan('${p.id}')">Edit</button> <button class="small danger" onclick="deleteSavedPlan('${p.id}')">Hapus</button></div></div>`).join('')||'<span class="muted">Belum ada plan pada tanggal ini.</span>'}
+function renderGreat(){let html='',n=0,total=0;allPlans.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id)).forEach(p=>{(p.rows||[]).forEach(r=>{n++;let km=Number(r.routeKm||0);total+=km;html+=`<tr><td>${n}</td><td>${formatDate(p.date)}</td><td>${escapeHtml(r.from)} → ${escapeHtml(r.to)}</td><td>${Number(r.start||0).toFixed(2)}</td><td>${Number(r.end||0).toFixed(2)}</td><td>${km.toFixed(2)}</td></tr>`})});document.getElementById('greatRows').innerHTML=html||'<tr><td colspan="6" class="muted">Belum ada data VectorPlan.</td></tr>';document.getElementById('greatTotal').textContent=total.toFixed(2)}
+function formatDate(s){if(!s)return'-';let p=s.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:s}
+function openSettings(){document.getElementById('settingsModal').classList.remove('hidden');document.getElementById('adminPassword').value='';if(admin){document.getElementById('loginBox').classList.add('hidden');document.getElementById('adminBox').classList.remove('hidden');document.getElementById('helpEditor').value=localStorage.getItem('vectormeter_help')||''}else{document.getElementById('loginBox').classList.remove('hidden');document.getElementById('adminBox').classList.add('hidden')}}
+function closeSettings(){document.getElementById('settingsModal').classList.add('hidden')}
+function adminLogin(){if(document.getElementById('adminPassword').value===ADMIN_PASSWORD){admin=true;openSettings();alert('Login administrator berhasil.')}else alert('Password administrator salah.')}
+function adminLogout(){admin=false;openSettings()}
+function saveHelp(){if(!admin)return;localStorage.setItem('vectormeter_help',document.getElementById('helpEditor').value);alert('HELP disimpan.');renderSupport()}
+function addSupportText(){if(!admin)return;let t=document.getElementById('supportText').value.trim();if(!t)return;let a=loadSupport();a.push({type:'text',value:t});saveSupport(a);document.getElementById('supportText').value='';renderSupport();alert('Tulisan ditambahkan ke SUPPORT.')}
+function pickMedia(){if(!admin)return;document.getElementById('mediaPicker').click()}
+function handleMedia(e){if(!admin)return;let f=e.target.files&&e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=function(){let a=loadSupport();a.push({type:f.type.startsWith('video/')?'video':'image',value:rd.result,name:f.name});saveSupport(a);renderSupport();alert('Media ditambahkan ke SUPPORT.')};rd.readAsDataURL(f);e.target.value=''}
+function loadSupport(){try{return JSON.parse(localStorage.getItem('vectormeter_support')||'[]')}catch(e){return []}}
+function saveSupport(a){localStorage.setItem('vectormeter_support',JSON.stringify(a))}
+function renderSupport(){let a=loadSupport();let h=a.map((x,i)=>{let body=x.type==='text'?`<div class="content-text">${escapeHtml(x.value)}</div>`:x.type==='video'?`<video controls src="${x.value}"></video>`:`<img src="${x.value}">`;return `<div class="content-item">${body}${admin?`<div style="margin-top:8px"><button class="small danger" onclick="deleteSupport(${i})">Hapus</button></div>`:''}</div>`}).join('');document.getElementById('supportContent').innerHTML=h||'<div class="card"><span class="muted">Belum ada isi SUPPORT.</span></div>';if(!document.getElementById('helpContent').textContent)document.getElementById('helpContent').textContent=localStorage.getItem('vectormeter_help')||'Belum ada panduan HELP.'}
+function deleteSupport(i){if(!admin)return;let a=loadSupport();a.splice(i,1);saveSupport(a);renderSupport()}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+document.getElementById('planDate').value=selectedDate;renderCurrent();renderDatePlans();renderGreat();renderSupport();
 </script>
 </body>
 </html>
